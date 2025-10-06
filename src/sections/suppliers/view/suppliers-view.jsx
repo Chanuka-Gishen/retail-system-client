@@ -34,7 +34,7 @@ export const SuppliersView = ({
               variant="contained"
               onClick={handleToggleAddDialog}
             >
-              Add
+              Add Supplier
             </Button>
           </Stack>
         </Grid>

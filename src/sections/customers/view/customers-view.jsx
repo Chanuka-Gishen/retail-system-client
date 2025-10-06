@@ -1,8 +1,8 @@
 import React from 'react';
 import {
+  Button,
   Card,
   Container,
-  IconButton,
   Paper,
   Stack,
   TextField,
@@ -46,9 +46,13 @@ export const CustomersView = ({
           <Stack direction="row" alignItems="center" justifyContent="space-between">
             <Typography variant="h4">Manage Customers</Typography>
             <Tooltip title="Register Customer">
-              <IconButton onClick={handleToggleAddDialog}>
-                <PersonAddAlt1Icon />
-              </IconButton>
+              <Button
+                startIcon={<PersonAddAlt1Icon />}
+                onClick={handleToggleAddDialog}
+                variant="contained"
+              >
+                Register Customer
+              </Button>
             </Tooltip>
           </Stack>
         </Grid>
@@ -56,7 +60,7 @@ export const CustomersView = ({
           <Grid container spacing={2}>
             <Grid size={{ xs: 12, sm: 4, md: 4, lg: 3 }}>
               <CustomersStatCard
-                title="Unique Customers"
+                title="Registered Customers"
                 count={uniqueCustomersCount}
                 icon={<PermContactCalendarIcon fontSize="medium" />}
                 isLoading={isLoadingCustomersCount}
@@ -64,7 +68,7 @@ export const CustomersView = ({
             </Grid>
             <Grid size={{ xs: 12, sm: 4, md: 4, lg: 3 }}>
               <CustomersStatCard
-                title="Repeating Customers"
+                title="Walk-In Customers"
                 count={repeatingCustomersCount}
                 icon={<TransferWithinAStationIcon fontSize="medium" />}
                 isLoading={isLoadingRepeatingCustomersCount}
@@ -84,6 +88,7 @@ export const CustomersView = ({
         </Grid>
         <Grid size={{ xs: 12, sm: 4, md: 4, lg: 3 }}>
           <TextField
+            size="small"
             label="Customer Name"
             value={selectedFilters.name}
             name="name"
@@ -94,6 +99,7 @@ export const CustomersView = ({
         </Grid>
         <Grid size={{ xs: 12, sm: 4, md: 4, lg: 3 }}>
           <TextField
+            size="small"
             label="Customer Mobile"
             value={selectedFilters.mobile}
             name="mobile"
@@ -104,19 +110,10 @@ export const CustomersView = ({
         </Grid>
         <Grid size={{ xs: 12, sm: 4, md: 4, lg: 3 }}>
           <TextField
+            size="small"
             label="Customer Secondary Mobile"
             value={selectedFilters.secMobile}
             name="secMobile"
-            onChange={handleChangeSearch}
-            autoComplete="off"
-            fullWidth
-          />
-        </Grid>
-        <Grid size={{ xs: 12, sm: 4, md: 4, lg: 3 }}>
-          <TextField
-            label="Vehicle Number"
-            value={selectedFilters.vehicleNumber}
-            name="vehicleNumber"
             onChange={handleChangeSearch}
             autoComplete="off"
             fullWidth

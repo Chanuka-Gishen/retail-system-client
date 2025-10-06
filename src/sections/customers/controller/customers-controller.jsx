@@ -6,13 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import usePagination from 'src/hooks/usePagination';
 
 const CustomersController = () => {
-  const tableKeys = [
-    'Customer Name',
-    'Customer Mobile',
-    'Secondary Mobile',
-    'Customer Vehicles',
-    'Registered Date',
-  ];
+  const tableKeys = ['Customer Name', 'Customer Mobile', 'Secondary Mobile', 'Registered Date'];
 
   const navigate = useNavigate();
 
@@ -38,15 +32,11 @@ const CustomersController = () => {
     name: '',
     mobile: '',
     secMobile: '',
-    vehicleNumber: '',
   });
 
   const memoizedSelectedFilters = useMemo(() => selectedFilters, [selectedFilters]);
 
   const pagination = usePagination();
-
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(0);
 
   const [isOpenAdd, setIsOpenAdd] = useState(false);
 

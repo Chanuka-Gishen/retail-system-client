@@ -14,7 +14,7 @@ import PendingIcon from '@mui/icons-material/Pending';
 import { formatCurrency } from 'src/utils/format-number';
 import { WO_STATUS_CLOSED } from 'src/constants/workorderStatus';
 
-export const CustomerJobRow = ({ data }) => {
+export const CustomerInvoiceRow = ({ data }) => {
   return (
     <>
       {data.map((item, index) => {

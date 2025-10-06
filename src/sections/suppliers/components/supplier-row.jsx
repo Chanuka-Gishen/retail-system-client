@@ -1,4 +1,5 @@
 import { Chip, TableCell, TableRow } from '@mui/material';
+import commonUtil from 'src/utils/common-util';
 import { formatCurrency } from 'src/utils/format-number';
 
 export const SupplierRow = ({ data, onClickRow }) => {
@@ -13,7 +14,9 @@ export const SupplierRow = ({ data, onClickRow }) => {
         >
           <TableCell>{item.supplierName}</TableCell>
           <TableCell>{item.supplierContactPerson}</TableCell>
-          <TableCell>{item.supplierPhone}</TableCell>
+          <TableCell>
+            {commonUtil.stringIsEmptyOrSpaces(item.supplierPhone) ? ' - ' : item.supplierPhone}
+          </TableCell>
           {/* <TableCell>
             {Array.isArray(item.supplierProducts) && item.supplierProducts.length > 0 ? (
               item.supplierProducts.map((v, index) => (
@@ -28,7 +31,9 @@ export const SupplierRow = ({ data, onClickRow }) => {
             )}
           </TableCell> */}
           <TableCell>{formatCurrency(item.supplierDueAmount)}</TableCell>
-          <TableCell>{item.supplierNotes}</TableCell>
+          <TableCell>
+            {commonUtil.stringIsEmptyOrSpaces(item.supplierNotes) ? ' - ' : item.supplierNotes}
+          </TableCell>
           <TableCell>
             <Chip
               label={item.supplierIsActive ? 'Active' : 'Not Active'}

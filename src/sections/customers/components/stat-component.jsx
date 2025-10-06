@@ -33,6 +33,7 @@ export const CustomersStatCard = ({
           boxShadow: theme.shadows[6],
         },
         transition: 'box-shadow 0.3s ease',
+        height: '100%'
       }}
     >
       <CardContent>
