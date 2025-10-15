@@ -28,8 +28,11 @@ export const NAVIGATION_ROUTES = {
   workorders: {
     base: '/workorders',
   },
-  pos:{
-    base: '/pos'
+  invoices: {
+    base: '/invoices',
+  },
+  pos: {
+    base: '/pos',
   },
   jobs: {
     base: '/jobs',

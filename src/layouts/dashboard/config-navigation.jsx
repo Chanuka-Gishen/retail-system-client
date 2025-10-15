@@ -4,7 +4,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import GroupIcon from '@mui/icons-material/Group';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
-import WorkIcon from '@mui/icons-material/Work';
+import ReceiptIcon from '@mui/icons-material/Receipt';
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
@@ -30,6 +30,13 @@ const navConfig = [
     name: NAVBAR_ITEMS.POS,
     path: 'pos',
     icon: <PointOfSaleIcon />,
+    permissions: [USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN, USER_ROLE.STAFF],
+  },
+  {
+    title: 'Invoices',
+    name: NAVBAR_ITEMS.INVOICES,
+    path: 'invoices',
+    icon: <ReceiptIcon />,
     permissions: [USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN, USER_ROLE.STAFF],
   },
   {

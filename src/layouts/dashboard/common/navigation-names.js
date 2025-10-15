@@ -5,6 +5,7 @@ export const NAVBAR_ITEMS = {
   NOTIFICATIONS: 'notifications',
   INVENTORY: 'inventory',
   POS: 'pos',
+  INVOICES: 'invoices',
   WORKORDERS: 'workorders',
   JOBS: 'jobs',
   SUPPLIERS: 'suppliers',

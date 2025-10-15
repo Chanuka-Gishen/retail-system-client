@@ -17,6 +17,7 @@ export const CustomersPage = lazy(() => import('src/pages/customers'));
 export const InventoryPage = lazy(() => import('src/pages/inventory'));
 export const InventoryItemPage = lazy(() => import('src/pages/inventory-item'));
 export const WorkordersPage = lazy(() => import('src/pages/workorders'));
+export const InvoicesPage = lazy(() => import('src/pages/invoices'));
 export const CustomerDetailsPage = lazy(() => import('src/pages/customer-details'));
 export const JobsPage = lazy(() => import('src/pages/jobs'));
 export const WorkorderDetailsPage = lazy(() => import('src/pages/workorder-details'));
@@ -76,6 +77,7 @@ const Router = () => {
         { path: NAVIGATION_ROUTES.inventory.details.base, element: <InventoryItemPage /> },
         { path: NAVIGATION_ROUTES.pos.base, element: <PosPage /> },
         { path: NAVIGATION_ROUTES.workorders.base, element: <WorkordersPage /> },
+        { path: NAVIGATION_ROUTES.invoices.base, element: <InvoicesPage /> },
         { path: NAVIGATION_ROUTES.bookings.base, element: <BookingsPage /> },
         { path: NAVIGATION_ROUTES.customers.Details.base, element: <CustomerDetailsPage /> },
         { path: NAVIGATION_ROUTES.jobs.base, element: <JobsPage /> },
