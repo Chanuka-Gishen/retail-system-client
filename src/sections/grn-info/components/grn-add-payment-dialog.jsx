@@ -18,7 +18,7 @@ import { Formik } from 'formik';
 import Grid from '@mui/material/Grid2';
 
 import { PAY_METHOD_CASH, PAY_METHODS } from 'src/constants/payment-methods';
-import { addPaymentSChema } from 'src/schema/add-payment-schema';
+import { addPaymentSchema } from 'src/schema/add-payment-schema';
 import { CurrencyInput } from 'src/components/currency-input/currency-input';
 import { formatCurrency } from 'src/utils/format-number';
 
@@ -37,7 +37,7 @@ export const GrnAddPaymentDialog = ({ open, handleClose, data, isLoading, handle
           paymentTransactionId: '',
           paymentNotes: '',
         }}
-        validationSchema={addPaymentSChema}
+        validationSchema={addPaymentSchema}
         onSubmit={(values) => {
           handleConfirm(values);
         }}

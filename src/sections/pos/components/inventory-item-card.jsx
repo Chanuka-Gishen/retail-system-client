@@ -30,7 +30,7 @@ const InventoryItemCard = ({ item, onSelect, isLoading }) => {
             <Avatar
               src={item.image}
               alt={item.itemName}
-              sx={{ width: 60, height: 60, bgcolor: 'transparent' }}
+              sx={{ width: { xs: 20, md: 60 }, height: { xs: 20, md: 60 } }}
             />
           ) : (
             <Avatar

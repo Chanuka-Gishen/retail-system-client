@@ -194,7 +194,7 @@ const usePayment = () => {
       setIsLoadingDeleteWoPay(true);
 
       await backendAuthApi({
-        url: BACKEND_API.PAYMENT_WO_DELETE,
+        url: BACKEND_API.PAYMENT_INVOICE_DELETE,
         method: 'DELETE',
         cancelToken: sourceToken.token,
         params: { id },

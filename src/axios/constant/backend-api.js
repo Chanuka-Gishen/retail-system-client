@@ -17,6 +17,7 @@ export const BACKEND_API = {
 
   CUSTOMERS: IP_URL + '/customer/auth/customers',
   CUSTOMER: IP_URL + '/customer/auth/customer',
+  CUSTOMER_OPTIONS: IP_URL + '/customer/auth/selection',
   CUSTOMER_REGISTER: IP_URL + '/customer/auth/register',
   CUSTOMER_EDIT: IP_URL + '/customer/supAuth/update',
   CUSTOMERS_NOTIFICATIONS: IP_URL + '/customer/auth/notification-logs',
@@ -76,10 +77,10 @@ export const BACKEND_API = {
 
   PAYMENTS: IP_URL + '/payment/auth/payments',
   PAYMENTS_PENDING: IP_URL + '/payment/auth/pending-payments',
-  PAYMENT_WO: IP_URL + '/payment/auth/wo-payments',
+  PAYMENT_INVOICE: IP_URL + '/payment/auth/invoice-payments',
   PAYMENT_CREATE: IP_URL + '/payment/auth/add',
   PAYMENT_DELETE: IP_URL + '/payment/supAuth/delete-payment',
-  PAYMENT_WO_DELETE: IP_URL + '/payment/supAuth/delete-wo-payment',
+  PAYMENT_INVOICE_DELETE: IP_URL + '/payment/supAuth/delete-invoice-payment',
   PAYMENT_CREATE_EXP: IP_URL + '/payment/auth/add-expenses',
   PAYMENT_CREATE_INC: IP_URL + '/payment/auth/add-income',
   PAYMENT_CREATE_REFUND: IP_URL + '/payment/supAuth/refund-payment',

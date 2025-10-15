@@ -24,33 +24,47 @@ import { WO_STATUS_COMPLETED, WO_STATUS_OPEN } from 'src/constants/workorderStat
 import { Fragment } from 'react';
 import { UpdateInvoiceItemDialog } from './update-invitem-dialog';
 import ConfirmationDialog from 'src/components/confirmation-dialog/confirmation-dialog';
+import { UpdateInvoiceDialog } from './update-invoice-dialog';
+import { InvoicePaymentDialog } from 'src/components/invoice-payment-dialog/invoice-payment-dialog';
+import { PAY_STATUS_PAID } from 'src/constants/payment-status';
 
 export const InvoicesComponent = ({
   value,
+  customerOptions,
   invoices,
   invoiceInfo,
   invoiceItems,
+  selectedInvoice,
   selectedItem,
+  isOpenInvoiceUpdate,
   isOpenUpdateDialog,
   isOpenDeleteDialog,
   isOpenComplete,
   isOpenClose,
+  isOpenAddPayment,
   isLoading,
+  isLoadingCustomerOptions,
+  isLoadingUpdateInvoice,
   isLoadingInvoiceInfo,
   isLoadingInvoiceItems,
   isLoadingUpdateInvoiceItem,
   isLoadingDeleteInvoiceItem,
   isLoadingCompleteInvoice,
   isLoadingClosingInvoice,
+  isLoadingCreatePayment,
   handleChange,
+  handleToggleUpdateInvoice,
   handleToggleUpdateDialog,
   handleToggleDeleteDialog,
   handleToggleCompleteInvoice,
   handleToggleCloseInvoice,
+  handleToggleAddPayment,
+  handleUpdateInvoice,
   handleDeleteInvoiceItem,
   handleUpdateInvoiceItem,
   handleCompleteInvoice,
   handleCloseInvoice,
+  handleAddPayment,
 }) => {
   const theme = useTheme();
   return (
@@ -75,12 +89,8 @@ export const InvoicesComponent = ({
               <TableBody>
                 {invoiceInfo?.invoiceNumber && (
                   <TableRow>
-                    <TableCell sx={{ background: theme.palette.primary.lighter }}>
-                      Invoice Number
-                    </TableCell>
-                    <TableCell
-                      sx={{ background: theme.palette.primary.lighter, fontWeight: 'bold' }}
-                    >
+                    <TableCell variant="head">Invoice Number</TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }} variant="head">
                       {isLoadingInvoiceInfo
                         ? 'Loading...'
                         : invoiceInfo
@@ -90,10 +100,8 @@ export const InvoicesComponent = ({
                   </TableRow>
                 )}
                 <TableRow>
-                  <TableCell sx={{ background: theme.palette.primary.lighter }}>
-                    Customer Type
-                  </TableCell>
-                  <TableCell sx={{ background: theme.palette.primary.lighter, fontWeight: 'bold' }}>
+                  <TableCell variant="head">Customer Type</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }} variant="head">
                     {isLoadingInvoiceInfo
                       ? 'Loading...'
                       : invoiceInfo
@@ -101,11 +109,21 @@ export const InvoicesComponent = ({
                         : ' - '}
                   </TableCell>
                 </TableRow>
+                {invoiceInfo?.invoiceCustomer && (
+                  <TableRow>
+                    <TableCell variant="head">Customer</TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }} variant="head">
+                      {isLoadingInvoiceInfo
+                        ? 'Loading...'
+                        : invoiceInfo
+                          ? `${invoiceInfo.invoiceCustomer.customerPrefix} ${invoiceInfo.invoiceCustomer.customerName}`
+                          : ' - '}
+                    </TableCell>
+                  </TableRow>
+                )}
                 <TableRow>
-                  <TableCell sx={{ background: theme.palette.primary.lighter }}>
-                    Created At
-                  </TableCell>
-                  <TableCell sx={{ background: theme.palette.primary.lighter, fontWeight: 'bold' }}>
+                  <TableCell variant="head">Created At</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }} variant="head">
                     {isLoadingInvoiceInfo
                       ? 'Loading...'
                       : invoiceInfo
@@ -220,6 +238,30 @@ export const InvoicesComponent = ({
                         : ' - '}
                   </TableCell>
                 </TableRow>
+                <TableRow>
+                  <TableCell colSpan={2} align="right" variant="head" sx={{ cursor: 'pointer' }}>
+                    Paid Amount
+                  </TableCell>
+                  <TableCell align="right" sx={{ cursor: 'pointer', fontWeight: 'bold' }}>
+                    {isLoadingInvoiceInfo
+                      ? 'Loading...'
+                      : invoiceInfo
+                        ? formatCurrency(invoiceInfo.invoicePaidAmount)
+                        : ' - '}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={2} align="right" variant="head" sx={{ cursor: 'pointer' }}>
+                    Balance Amount
+                  </TableCell>
+                  <TableCell align="right" sx={{ cursor: 'pointer', fontWeight: 'bold' }}>
+                    {isLoadingInvoiceInfo
+                      ? 'Loading...'
+                      : invoiceInfo
+                        ? formatCurrency(invoiceInfo.invoiceBalanceAmount)
+                        : ' - '}
+                  </TableCell>
+                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>
@@ -227,7 +269,12 @@ export const InvoicesComponent = ({
             {!isLoading && invoiceInfo?.invoiceStatus === WO_STATUS_OPEN && (
               <>
                 <Grid size={{ xs: 6, sm: 4 }}>
-                  <Button variant="contained" fullWidth disabled={false} onClick={null}>
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    disabled={isLoadingUpdateInvoice}
+                    onClick={() => handleToggleUpdateInvoice(invoiceInfo)}
+                  >
                     Update Invoice
                   </Button>
                 </Grid>
@@ -255,11 +302,19 @@ export const InvoicesComponent = ({
                     Close
                   </Button>
                 </Grid>
-                <Grid size={{ xs: 6, sm: 4 }}>
-                  <Button variant="contained" fullWidth>
-                    Pay
-                  </Button>
-                </Grid>
+                {invoiceInfo.invoicePaymentStatus != PAY_STATUS_PAID && (
+                  <Grid size={{ xs: 6, sm: 4 }}>
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      disabled={isLoadingCreatePayment}
+                      onClick={() => handleToggleAddPayment(invoiceInfo)}
+                    >
+                      Pay
+                    </Button>
+                  </Grid>
+                )}
+
                 <Grid size={{ xs: 6, sm: 4 }}>
                   <Button variant="contained" fullWidth>
                     Print
@@ -304,6 +359,26 @@ export const InvoicesComponent = ({
           handleClose={handleToggleCloseInvoice}
           isLoading={isLoadingClosingInvoice}
           handleSubmit={handleCloseInvoice}
+        />
+      )}
+      {isOpenInvoiceUpdate && selectedInvoice && (
+        <UpdateInvoiceDialog
+          open={isOpenInvoiceUpdate}
+          data={selectedInvoice}
+          customerOptions={customerOptions}
+          handleOpenClose={handleToggleUpdateInvoice}
+          isLoadingCustomerOptions={isLoadingCustomerOptions}
+          isLoading={isLoadingUpdateInvoice}
+          handleConfirm={handleUpdateInvoice}
+        />
+      )}
+      {isOpenAddPayment && (
+        <InvoicePaymentDialog
+          open={isOpenAddPayment}
+          data={selectedInvoice}
+          handleClose={handleToggleAddPayment}
+          isLoading={isLoadingCreatePayment}
+          handleConfirm={handleAddPayment}
         />
       )}
     </>

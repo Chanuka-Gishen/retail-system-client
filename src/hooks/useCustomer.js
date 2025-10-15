@@ -13,6 +13,7 @@ const useCustomer = () => {
   const [customers, setCustomers] = useState([]);
   const [customersCount, setCustomersCount] = useState(0);
   const [customer, setCustomer] = useState(null);
+  const [customerOptions, setCustomerOptions] = useState(null);
   const [smsLogs, setSmsLogs] = useState([]);
   const [smsCount, setSmsCount] = useState(0);
   const [customerSmsLogs, setCustomerSmsLogs] = useState([]);
@@ -26,6 +27,7 @@ const useCustomer = () => {
   });
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingCustomerOptions, setIsLoadingCustomerOptions] = useState(false);
   const [isLoadingAdd, setIsLoadingAdd] = useState(false);
   const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
   const [isLoadingCustomer, setIsLoadingCustomer] = useState(true);
@@ -83,6 +85,32 @@ const useCustomer = () => {
       })
       .finally(() => {
         setIsLoadingCustomer(false);
+      });
+  };
+
+  // Get customer options for selections
+  const fetchCustomerOptions = async () => {
+    if (isLoadingCustomerOptions) return;
+
+    setIsLoadingCustomerOptions(true);
+
+    await backendAuthApi({
+      url: BACKEND_API.CUSTOMER_OPTIONS,
+      method: 'GET',
+      cancelToken: sourceToken.token,
+    })
+      .then((res) => {
+        if (responseUtil.isResponseSuccess(res.data.responseCode)) {
+          if (res.data.responseData.length > 0) {
+            setCustomerOptions(res.data.responseData);
+          }
+        }
+      })
+      .catch(() => {
+        setIsLoadingCustomerOptions(false);
+      })
+      .finally(() => {
+        setIsLoadingCustomerOptions(false);
       });
   };
 
@@ -320,6 +348,7 @@ const useCustomer = () => {
     customers,
     customersCount,
     customer,
+    customerOptions,
     smsLogs,
     customerSmsLogs,
     smsCount,
@@ -328,6 +357,7 @@ const useCustomer = () => {
     repeatingCustomersCount,
     newCustomersCount,
     isLoading,
+    isLoadingCustomerOptions,
     isLoadingAdd,
     isLoadingUpdate,
     isLoadingCustomer,
@@ -340,6 +370,7 @@ const useCustomer = () => {
     isLoadingNewCustomersCount,
     fetchCustomers,
     fetchCustomer,
+    fetchCustomerOptions,
     registerCustomer,
     updateCustomer,
     fetchSmsLogs,

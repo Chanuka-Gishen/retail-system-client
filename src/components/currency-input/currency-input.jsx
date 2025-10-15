@@ -18,6 +18,9 @@ export const CurrencyInput = React.forwardRef(function CurrencyInput(props, ref)
           },
         });
       }}
+      decimalScale={2}
+      fixedDecimalScale={true}
+      allowNegative={false}
       thousandSeparator
       valueIsNumericString
       prefix="Rs. "

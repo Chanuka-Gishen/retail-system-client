@@ -25,45 +25,54 @@ export const PosView = ({
   items,
   itemsCount,
   itemCategories,
+  customerOptions,
   invoices,
   invoiceInfo,
   invoiceItems,
   selectedFilters,
   selectedInvoice,
   selectedItem,
-  searchParams,
   value,
   pagination,
   isOpenAdd,
+  isOpenInvoiceUpdate,
   isOpenUpdate,
   isOpenDelete,
   isOpenComplete,
   isOpenClose,
+  isOpenAddPayment,
   isLoadingInvoices,
   isLoadingInvoiceInfo,
   isLoadingInvoiceItems,
   isLoadingItems,
   isLoadingItemCategories,
+  isLoadingCustomerOptions,
   isLoadingCreateInvoice,
+  isLoadingUpdateInvoice,
   isLoadingAddInvItem,
   isLoadingUpdateInvItem,
   isLoadingDeleteInvItem,
   isLoadingCompleteInvoice,
   isLoadingClosingInvoice,
+  isLoadingCreatePayment,
   handleChangeSearch,
   handleSelectCategories,
   handleChangeTab,
   handleToggleAddInvoice,
+  handleToggleUpdateInvoice,
   handleToggleDeleteInvoiceItem,
   handleToggleUpdateInvoiceItem,
   handleToggleCompleteInvoice,
   handleToggleCloseInvoice,
+  handleToggleAddPayment,
   handleAddNewInvoice,
+  handleUpdateInvoice,
   handleAddNewItem,
   handleUpdateItem,
   handleDeleteInvoiceItem,
   handleCompleteInvoice,
   handleCloseInvoice,
+  handleAddPayment
 }) => {
   return (
     <Container maxWidth="xl" sx={{ mt: '20px' }}>
@@ -73,6 +82,13 @@ export const PosView = ({
             <Grid container spacing={2}>
               <Grid size={12}>
                 <Grid container spacing={2}>
+                  {isLoadingItemCategories && (
+                    <Grid size={12}>
+                      <Typography variant="caption" fontStyle="italic">
+                        Loading Categories...
+                      </Typography>
+                    </Grid>
+                  )}
                   {itemCategories.map((value, index) => (
                     <Grid key={index} size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
                       <Chip
@@ -195,30 +211,41 @@ export const PosView = ({
             {!isLoadingInvoices && invoices.length > 0 && (
               <InvoicesComponent
                 value={value}
+                customerOptions={customerOptions}
+                selectedInvoice={selectedInvoice}
                 invoices={invoices}
                 invoiceInfo={invoiceInfo}
                 invoiceItems={invoiceItems}
                 selectedItem={selectedItem}
+                isOpenInvoiceUpdate={isOpenInvoiceUpdate}
                 isOpenUpdateDialog={isOpenUpdate}
                 isOpenDeleteDialog={isOpenDelete}
                 isOpenComplete={isOpenComplete}
                 isOpenClose={isOpenClose}
+                isOpenAddPayment={isOpenAddPayment}
                 isLoading={isLoadingInvoices}
+                isLoadingCustomerOptions={isLoadingCustomerOptions}
+                isLoadingUpdateInvoice={isLoadingUpdateInvoice}
                 isLoadingInvoiceInfo={isLoadingInvoiceInfo}
                 isLoadingInvoiceItems={isLoadingInvoiceItems}
                 isLoadingUpdateInvoiceItem={isLoadingUpdateInvItem}
                 isLoadingDeleteInvoiceItem={isLoadingDeleteInvItem}
                 isLoadingCompleteInvoice={isLoadingCompleteInvoice}
                 isLoadingClosingInvoice={isLoadingClosingInvoice}
+                isLoadingCreatePayment={isLoadingCreatePayment}
                 handleChange={handleChangeTab}
+                handleToggleUpdateInvoice={handleToggleUpdateInvoice}
                 handleToggleUpdateDialog={handleToggleUpdateInvoiceItem}
                 handleToggleDeleteDialog={handleToggleDeleteInvoiceItem}
                 handleToggleCompleteInvoice={handleToggleCompleteInvoice}
                 handleToggleCloseInvoice={handleToggleCloseInvoice}
+                handleToggleAddPayment={handleToggleAddPayment}
+                handleUpdateInvoice={handleUpdateInvoice}
                 handleUpdateInvoiceItem={handleUpdateItem}
                 handleDeleteInvoiceItem={handleDeleteInvoiceItem}
                 handleCompleteInvoice={handleCompleteInvoice}
                 handleCloseInvoice={handleCloseInvoice}
+                handleAddPayment={handleAddPayment}
               />
             )}
           </Box>
