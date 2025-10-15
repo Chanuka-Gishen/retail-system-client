@@ -7,7 +7,7 @@ export default function EmployeesPage() {
   return (
     <>
       <Helmet>
-        <title> Employees | POS APP </title>
+        <title> Employees | 360-POS </title>
       </Helmet>
 
       <Employees />

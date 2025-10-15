@@ -16,6 +16,7 @@ const useInventory = () => {
   const [stockLogs, setStockLogs] = useState([]);
   const [stockLogsCount, setStockLogsCount] = useState(0);
   const [selectItems, setSelectItems] = useState([]);
+  const [selectItemsCount, setSelectItemsCount] = useState(0);
   const [categories, setCategories] = useState([]);
   const [categoriesSelect, setCategoriesSelect] = useState([]);
   const [invStockStats, setInvStockStats] = useState([]);
@@ -99,7 +100,8 @@ const useInventory = () => {
     })
       .then((res) => {
         if (responseUtil.isResponseSuccess(res.data.responseCode)) {
-          setSelectItems(res.data.responseData);
+          setSelectItems(res.data.responseData.data);
+          setSelectItemsCount(res.data.responseData.count);
         }
       })
       .catch(() => {
@@ -364,6 +366,7 @@ const useInventory = () => {
   return {
     items,
     selectItems,
+    selectItemsCount,
     item,
     itemsCount,
     categories,

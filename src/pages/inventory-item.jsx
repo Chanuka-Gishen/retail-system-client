@@ -7,7 +7,7 @@ export default function InventoryItemPage() {
   return (
     <>
       <Helmet>
-        <title> Inventory Item | POS APP </title>
+        <title> Inventory Item | 360-POS </title>
       </Helmet>
 
       <InventoryItem />

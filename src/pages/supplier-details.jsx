@@ -7,7 +7,7 @@ export default function SupplierInfoPage() {
   return (
     <>
       <Helmet>
-        <title> Suppliers Info | POS APP </title>
+        <title> Suppliers Info | 360-POS </title>
       </Helmet>
 
       <SupplierDetails />

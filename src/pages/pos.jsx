@@ -1,17 +1,16 @@
 import { Helmet } from 'react-helmet-async';
-
-import { Notifications } from 'src/sections/notifications';
+import { Pos } from 'src/sections/pos';
 
 // ----------------------------------------------------------------------
 
-export default function NotificationsPage() {
+export default function PosPage() {
   return (
     <>
       <Helmet>
-        <title> Notifications | 360-POS </title>
+        <title> POS | 360-POS </title>
       </Helmet>
 
-      <Notifications />
+      <Pos />
     </>
   );
 }

@@ -7,7 +7,7 @@ export default function JobsPage() {
   return (
     <>
       <Helmet>
-        <title> Jobs | POS APP </title>
+        <title> Jobs | 360-POS </title>
       </Helmet>
 
       <Jobs />

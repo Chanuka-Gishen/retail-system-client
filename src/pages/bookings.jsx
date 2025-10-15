@@ -7,7 +7,7 @@ export default function BookingsPage() {
   return (
     <>
       <Helmet>
-        <title> Bookings | POS APP </title>
+        <title> Bookings | 360-POS </title>
       </Helmet>
 
       <Bookings />

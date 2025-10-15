@@ -44,6 +44,18 @@ export const BACKEND_API = {
   ITEMS_INFO: IP_URL + '/inventory/auth/item',
   ITEMS_STOCK_STATISTICS: IP_URL + '/inventory/auth/inv-stocks-status',
 
+  INVOICE_GET_ALL: IP_URL + '/invoice/auth/all',
+  INVOICE_GET_OPEN: IP_URL + '/invoice/auth/open-invoices',
+  INVOICE_GET_INFO: IP_URL + '/invoice/auth/invoice-info',
+  INVOICE_GET_ITEMS: IP_URL + '/invoice/auth/invoice-items',
+  INVOICE_CREATE: IP_URL + '/invoice/auth/create',
+  INVOICE_UPDATE: IP_URL + '/invoice/auth/update',
+  INVOICE_ADD_ITEMS: IP_URL + '/invoice/auth/add-item',
+  INVOICE_UPDATE_ITEMS: IP_URL + '/invoice/auth/update-item',
+  INVOICE_DELETE_ITEM: IP_URL + '/invoice/auth/delete-item',
+  INVOICE_COMPLETE: IP_URL + '/invoice/auth/complete',
+  INVOICE_CLOSE: IP_URL + '/invoice/auth/close',
+
   WO_ALL: IP_URL + '/workorder/auth/list',
   WO_ACTIVE: IP_URL + '/workorder/auth/active-orders',
   WO_INFO: IP_URL + '/workorder/auth/info',

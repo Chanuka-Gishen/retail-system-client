@@ -7,7 +7,7 @@ export default function AppPage() {
   return (
     <>
       <Helmet>
-        <title> Workorders | POS APP </title>
+        <title> Workorders | 360-POS </title>
       </Helmet>
 
       <Workorders />

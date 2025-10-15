@@ -8,7 +8,7 @@ export default function AppPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard | POS APP </title>
+        <title> Dashboard | 360-POS </title>
       </Helmet>
 
       <Overview />

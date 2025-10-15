@@ -8,7 +8,7 @@ export default function LoginPage() {
   return (
     <>
       <Helmet>
-        <title> Login | POS APP </title>
+        <title> Login | 360-POS </title>
       </Helmet>
 
       <LoginView />

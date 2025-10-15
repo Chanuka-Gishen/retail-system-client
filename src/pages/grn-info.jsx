@@ -7,7 +7,7 @@ export default function GrnInfoPage() {
   return (
     <>
       <Helmet>
-        <title> GRN Info | POS APP </title>
+        <title> GRN Info | 360-POS </title>
       </Helmet>
 
       <GrnInfo />

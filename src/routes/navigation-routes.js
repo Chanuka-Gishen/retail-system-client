@@ -28,6 +28,9 @@ export const NAVIGATION_ROUTES = {
   workorders: {
     base: '/workorders',
   },
+  pos:{
+    base: '/pos'
+  },
   jobs: {
     base: '/jobs',
     details: {

@@ -7,7 +7,7 @@ export default function UsersPage() {
   return (
     <>
       <Helmet>
-        <title> Users | POS APP </title>
+        <title> Users | 360-POS </title>
       </Helmet>
 
       <Users />

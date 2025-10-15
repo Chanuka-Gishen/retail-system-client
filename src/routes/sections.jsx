@@ -32,6 +32,7 @@ export const GrnInfoPage = lazy(() => import('src/pages/grn-info'));
 export const NotificationsPage = lazy(() => import('src/pages/notifications'));
 export const PayrollPage = lazy(() => import('src/pages/payroll'));
 export const bookingsPage = lazy(() => import('src/pages/bookings'));
+export const PosPage = lazy(() => import('src/pages/pos'));
 
 // ----------------------------------------------------------------------
 
@@ -73,6 +74,7 @@ const Router = () => {
         { path: NAVIGATION_ROUTES.customers.base, element: <CustomersPage /> },
         { path: NAVIGATION_ROUTES.inventory.base, element: <InventoryPage /> },
         { path: NAVIGATION_ROUTES.inventory.details.base, element: <InventoryItemPage /> },
+        { path: NAVIGATION_ROUTES.pos.base, element: <PosPage /> },
         { path: NAVIGATION_ROUTES.workorders.base, element: <WorkordersPage /> },
         { path: NAVIGATION_ROUTES.bookings.base, element: <BookingsPage /> },
         { path: NAVIGATION_ROUTES.customers.Details.base, element: <CustomerDetailsPage /> },

@@ -7,7 +7,7 @@ export default function InventoryPage() {
   return (
     <>
       <Helmet>
-        <title> Inventory | POS APP </title>
+        <title> Inventory | 360-POS </title>
       </Helmet>
 
       <Inventory />

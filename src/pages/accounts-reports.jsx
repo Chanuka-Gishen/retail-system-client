@@ -7,7 +7,7 @@ export default function AccountsReportsPage() {
   return (
     <>
       <Helmet>
-        <title> Reports | POS APP </title>
+        <title> Reports | 360-POS </title>
       </Helmet>
 
       <AccountsReports />

@@ -8,7 +8,7 @@ export default function SetPasswordPage() {
   return (
     <>
       <Helmet>
-        <title> Password | POS APP </title>
+        <title> Password | 360-POS </title>
       </Helmet>
 
       <SetPassword />

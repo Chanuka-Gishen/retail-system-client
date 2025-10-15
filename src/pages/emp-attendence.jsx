@@ -7,7 +7,7 @@ export default function EmpAttendencePage() {
   return (
     <>
       <Helmet>
-        <title> Attendence | POS APP </title>
+        <title> Attendence | 360-POS </title>
       </Helmet>
 
       <EmpAttendence />

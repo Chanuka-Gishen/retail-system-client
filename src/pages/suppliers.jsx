@@ -7,7 +7,7 @@ export default function SupplierPage() {
   return (
     <>
       <Helmet>
-        <title> Suppliers | POS APP </title>
+        <title> Suppliers | 360-POS </title>
       </Helmet>
 
       <Suppliers />

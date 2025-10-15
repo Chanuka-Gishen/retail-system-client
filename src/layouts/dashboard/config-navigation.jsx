@@ -3,6 +3,7 @@ import { NAVBAR_ITEMS } from './common/navigation-names';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import GroupIcon from '@mui/icons-material/Group';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import WorkIcon from '@mui/icons-material/Work';
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
@@ -11,9 +12,6 @@ import HailIcon from '@mui/icons-material/Hail';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import ScheduleIcon from '@mui/icons-material/Schedule';
-import CampaignIcon from '@mui/icons-material/Campaign';
-import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 import { USER_ROLE } from 'src/constants/user-role';
 
@@ -28,10 +26,10 @@ const navConfig = [
     permissions: [USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN, USER_ROLE.STAFF],
   },
   {
-    title: 'Active Jobs',
-    name: NAVBAR_ITEMS.WORKORDERS,
-    path: 'workorders',
-    icon: <WorkIcon />,
+    title: 'POS',
+    name: NAVBAR_ITEMS.POS,
+    path: 'pos',
+    icon: <PointOfSaleIcon />,
     permissions: [USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN, USER_ROLE.STAFF],
   },
   {

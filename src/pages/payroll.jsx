@@ -7,7 +7,7 @@ export default function PayrollPage() {
   return (
     <>
       <Helmet>
-        <title> Payroll Management | POS APP </title>
+        <title> Payroll Management | 360-POS </title>
       </Helmet>
 
       <Payroll />
