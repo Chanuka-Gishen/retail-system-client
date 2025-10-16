@@ -30,6 +30,9 @@ export const NAVIGATION_ROUTES = {
   },
   invoices: {
     base: '/invoices',
+    details: {
+      base: '/invoices/details',
+    },
   },
   pos: {
     base: '/pos',

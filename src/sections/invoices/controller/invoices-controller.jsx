@@ -3,6 +3,7 @@ import { InvoicesView } from '../view/invoices-view';
 import { useInvoice } from 'src/hooks/useInvoice';
 import usePagination from 'src/hooks/usePagination';
 import { useEffect, useState } from 'react';
+import { NAVIGATION_ROUTES } from 'src/routes/navigation-routes';
 
 const InvoicesController = () => {
   const tableTitles = [
@@ -50,11 +51,11 @@ const InvoicesController = () => {
   };
 
   const handleOnRowClick = (data) => {
-    // navigate(NAVIGATION_ROUTES.jobs.details.base, {
-    //   state: {
-    //     id: data._id,
-    //   },
-    // });
+    navigate(NAVIGATION_ROUTES.invoices.details.base, {
+      state: {
+        id: data._id,
+      },
+    });
   };
 
   useEffect(() => {
