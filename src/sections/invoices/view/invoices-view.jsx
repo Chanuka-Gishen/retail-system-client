@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { CustomTable } from 'src/components/custom-table/custom-table';
-import { INV_CUSTOMER_TYPES } from 'src/constants/invoiceConstants';
+import { INV_CUSTOMER_TYPES } from 'src/constants/invoice-constants';
 import { PAY_STATUS } from 'src/constants/payment-status';
 import { InvoicesRow } from '../components/invoices-row';
 

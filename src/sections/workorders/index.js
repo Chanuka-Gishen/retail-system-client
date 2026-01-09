@@ -1,1 +1,0 @@
-export { default as Workorders } from "./controller/workroders-controller"

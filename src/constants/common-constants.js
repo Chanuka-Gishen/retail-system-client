@@ -40,9 +40,14 @@ export const STATUS_CREATED = "Created";
 export const STATUS_PENDING = "Pending";
 export const STATUS_COMPLETED = "Completed";
 export const STATUS_CANCELED = "Canceled";
+export const STATUS_ISSUED = "Issued";
+export const STATUS_EXPIRED = "Expired";
+export const STATUS_PROCESSED = "Processed";
 
 export const STATUS_BOOKINGS = [
   STATUS_CREATED,
   STATUS_COMPLETED,
   STATUS_CANCELED,
 ];
+
+export const RETURN_STATUS = [STATUS_ISSUED, STATUS_EXPIRED, STATUS_PROCESSED];

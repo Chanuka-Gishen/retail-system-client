@@ -13,6 +13,12 @@ export const useInvoice = () => {
   const [openInvoices, setOpenInvoices] = useState([]);
   const [invoiceInfo, setInvoiceInfo] = useState(null);
   const [invoiceItems, setInvoiceItems] = useState([]);
+  const [returnItems, setReturnItems] = useState([]);
+  const [statTodaySales, setStatTodaySales] = useState(0);
+  const [statTodayGrossProfit, setStatTodayGrossProfit] = useState(0);
+  const [statTodayInvoicesCount, setStatTodayInvoicesCount] = useState(0);
+  const [statPastSales, setStatPastSales] = useState([]);
+  const [statPastInvoicesCount, setStatPastInvoicesCount] = useState([]);
 
   const [isLoadingInvoices, setIsLoadingInvoices] = useState(false);
   const [isLoadingOpenInvoices, setIsLoadingOpenInvoices] = useState(false);
@@ -25,6 +31,13 @@ export const useInvoice = () => {
   const [isLoadingDeleteInvItem, setIsLoadingDeleteInvItem] = useState(false);
   const [isLoadingCompleteInvoice, setIsLoadingCompleteInvoice] = useState(false);
   const [isLoadingClosingInvoice, setIsLoadingClosingInvoice] = useState(false);
+  const [isLoadingCreateReturnItems, setIsLoadingCreateReturnItems] = useState(false);
+  const [isLoadingReturnItems, setIsLoadingReturnItems] = useState(false);
+  const [isLoadingStatTodaySales, setIsLoadingStatTodaySales] = useState(true);
+  const [isLoadingStatTodayGrossProfit, setIsLoadingStatTodayGrossProfit] = useState(true);
+  const [isLoadingStatTodayInvCount, setIsLoadingStatTodayInvCount] = useState(true);
+  const [isLoadingPastSales, setIsLoadingPastSales] = useState(true);
+  const [isLoadingPastInvCount, setIsLoadingPastInvCount] = useState(true);
 
   // Create invoice
   const createInvoiceController = async (data) => {
@@ -290,12 +303,176 @@ export const useInvoice = () => {
     return isSuccess;
   };
 
+  // Create return items for invoice
+  const createReturnItemsController = async (data) => {
+    if (isLoadingCreateReturnItems) return;
+
+    let isSuccess = false;
+
+    setIsLoadingCreateReturnItems(true);
+
+    await backendAuthApi({
+      url: BACKEND_API.INVOICE_RETURN,
+      method: 'POST',
+      cancelToken: sourceToken.token,
+      data,
+    })
+      .then((res) => {
+        if (responseUtil.isResponseSuccess(res.data.responseCode)) {
+          isSuccess = true;
+        }
+      })
+      .catch(() => {
+        setIsLoadingCreateReturnItems(false);
+      })
+      .finally(() => {
+        setIsLoadingCreateReturnItems(false);
+      });
+
+    return isSuccess;
+  };
+
+  // Get return items
+  const fetchReturnItemsController = async (id) => {
+    if (isLoadingReturnItems) return;
+
+    setIsLoadingReturnItems(true);
+
+    await backendAuthApi({
+      url: BACKEND_API.INVOICE_GET_RETURNS,
+      method: 'GET',
+      cancelToken: sourceToken.token,
+      params: { id },
+    })
+      .then((res) => {
+        if (responseUtil.isResponseSuccess(res.data.responseCode)) {
+          if (res.data.responseData.length > 0) {
+            setReturnItems(res.data.responseData);
+          }
+        }
+      })
+      .catch(() => {
+        setIsLoadingReturnItems(false);
+      })
+      .finally(() => {
+        setIsLoadingReturnItems(false);
+      });
+  };
+
+  // Statistics - Today Sales
+  const fetchTodaySalesController = async () => {
+    setIsLoadingStatTodaySales(true);
+
+    await backendAuthApi({
+      url: BACKEND_API.INVOICE_STAT_TODAY_SALES,
+      method: 'GET',
+      cancelToken: sourceToken.token,
+    })
+      .then((res) => {
+        if (responseUtil.isResponseSuccess(res.data.responseCode)) {
+          setStatTodaySales(res.data.responseData);
+        }
+        setIsLoadingStatTodaySales(false);
+      })
+      .catch(() => {
+        setIsLoadingStatTodaySales(false);
+      });
+  };
+
+  // Statistics - Today Gross Profit
+  const fetchTodayGrossProfitController = async () => {
+    setIsLoadingStatTodayGrossProfit(true);
+
+    await backendAuthApi({
+      url: BACKEND_API.INVOICE_STAT_GROSS_PROFIT,
+      method: 'GET',
+      cancelToken: sourceToken.token,
+    })
+      .then((res) => {
+        if (responseUtil.isResponseSuccess(res.data.responseCode)) {
+          setStatTodayGrossProfit(res.data.responseData);
+        }
+        setIsLoadingStatTodayGrossProfit(false);
+      })
+      .catch(() => {
+        setIsLoadingStatTodayGrossProfit(false);
+      });
+  };
+
+  // Statistics - Today Invoice Count
+  const fetchTodayInvCountController = async () => {
+    setIsLoadingStatTodayInvCount(true);
+
+    await backendAuthApi({
+      url: BACKEND_API.INVOICE_STAT_INVOICES_COUNT,
+      method: 'GET',
+      cancelToken: sourceToken.token,
+    })
+      .then((res) => {
+        if (responseUtil.isResponseSuccess(res.data.responseCode)) {
+          setStatTodayInvoicesCount(res.data.responseData);
+        }
+        setIsLoadingStatTodayInvCount(false);
+      })
+      .catch(() => {
+        setIsLoadingStatTodayInvCount(false);
+      });
+  };
+
+  // Statistics - Past Sales
+  const fetchPastSalesController = async (days = 7) => {
+    setIsLoadingPastSales(true);
+
+    await backendAuthApi({
+      url: BACKEND_API.INVOICE_STAT_PAST_SALES,
+      method: 'GET',
+      cancelToken: sourceToken.token,
+    })
+      .then((res) => {
+        if (responseUtil.isResponseSuccess(res.data.responseCode)) {
+          setStatPastSales(res.data.responseData);
+        }
+
+        setIsLoadingPastSales(false);
+      })
+      .catch(() => {
+        setIsLoadingPastSales(false);
+      });
+  };
+
+  // Statistics - Past Invoices Count
+  const fetchPastInvoicesCountController = async (days = 7) => {
+    setIsLoadingPastInvCount(true);
+
+    await backendAuthApi({
+      url: BACKEND_API.INVOICE_STAT_PAST_INVOICES_COUNT,
+      method: 'GET',
+      cancelToken: sourceToken.token,
+    })
+      .then((res) => {
+        if (responseUtil.isResponseSuccess(res.data.responseCode)) {
+          setStatPastInvoicesCount(res.data.responseData);
+        }
+
+        setIsLoadingPastInvCount(false);
+      })
+      .catch(() => {
+        setIsLoadingPastInvCount(false);
+      });
+  };
+
   return {
     invoices,
     invoicesCount,
     openInvoices,
     invoiceItems,
     invoiceInfo,
+    returnItems,
+    statTodaySales,
+    statTodayGrossProfit,
+    statTodayInvoicesCount,
+    statPastSales,
+    statPastInvoicesCount,
     isLoadingInvoices,
     isLoadingOpenInvoices,
     isLoadingInvoiceInfo,
@@ -307,6 +484,13 @@ export const useInvoice = () => {
     isLoadingDeleteInvItem,
     isLoadingCompleteInvoice,
     isLoadingClosingInvoice,
+    isLoadingCreateReturnItems,
+    isLoadingReturnItems,
+    isLoadingStatTodaySales,
+    isLoadingStatTodayGrossProfit,
+    isLoadingStatTodayInvCount,
+    isLoadingPastSales,
+    isLoadingPastInvCount,
     createInvoiceController,
     updateInvoiceController,
     addInvoiceItemController,
@@ -316,7 +500,14 @@ export const useInvoice = () => {
     fetchOpenInvoicesController,
     fetchInvoiceInfoController,
     fetchInvoiceItemsController,
+    fetchReturnItemsController,
     completeInvoiceController,
     closeInvoiceController,
+    createReturnItemsController,
+    fetchTodaySalesController,
+    fetchTodayGrossProfitController,
+    fetchTodayInvCountController,
+    fetchPastSalesController,
+    fetchPastInvoicesCountController,
   };
 };

@@ -11,16 +11,16 @@ import {
   TableRow,
   Typography,
   TableCell,
-  Paper,
   TableHead,
   Button,
+  Divider,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import PendingIcon from '@mui/icons-material/Pending';
 
-import { INV_CUS_TYP_REGISTERED } from 'src/constants/invoiceConstants';
+import { INV_CUS_TYP_REGISTERED } from 'src/constants/invoice-constants';
 import { NAVIGATION_ROUTES } from 'src/routes/navigation-routes';
 import useAuthStore from 'src/store/auth-store';
 import { formatCurrency } from 'src/utils/format-number';
@@ -34,6 +34,9 @@ import {
 import { fDateTime } from 'src/utils/format-time';
 import TableLoadingRow from 'src/components/custom-table/table-loading-row';
 import { InvoicePaymentDialog } from 'src/components/invoice-payment-dialog/invoice-payment-dialog';
+import { WO_STATUS_CLOSED } from 'src/constants/workorderStatus';
+import { InvoiceReturnDialog } from '../components/invoice-return-dialog';
+import InvoiceReturnCard from '../components/invoice-return-card';
 
 const CustomTabelCell = (props, children) => {
   return <TableCell {...props} sx={{ cursor: 'pointer' }}></TableCell>;
@@ -42,12 +45,19 @@ const CustomTabelCell = (props, children) => {
 export const InvoiceView = ({
   invoiceInfo,
   invoiceItems,
+  returnItems,
+  initialReturnValues,
+  isOpenReturnItems,
   isOpenCreatePayment,
   isLoadingInvoiceInfo,
   isLoadingInvoiceItems,
   isLoadingCreate,
+  isLoadingCreateReturnItems,
+  isLoadingReturnItems,
+  handleToggleReturnItems,
   handleToggleCreatePayment,
   handleCreatePayment,
+  handleReturnItems,
 }) => {
   const { auth } = useAuthStore.getState();
   return (
@@ -63,6 +73,13 @@ export const InvoiceView = ({
             </Typography>
           </Breadcrumbs>
         </Grid>
+        {invoiceInfo?.invoiceStatus === WO_STATUS_CLOSED && (
+          <Grid size={{ xs: 6, md: 2 }}>
+            <Button variant="contained" fullWidth onClick={handleToggleReturnItems}>
+              Return Items
+            </Button>
+          </Grid>
+        )}
         {invoiceInfo?.invoicePaymentStatus != PAY_STATUS_PAID && (
           <Grid size={{ xs: 6, md: 2 }}>
             <Button variant="contained" fullWidth onClick={handleToggleCreatePayment}>
@@ -236,6 +253,30 @@ export const InvoiceView = ({
             </Grid>
           </Grid>
         </Grid>
+        <Grid size={12}>
+          <Divider textAlign="center">
+            <Typography variant="h4">Returns</Typography>
+          </Divider>
+        </Grid>
+        {isLoadingReturnItems && (
+          <Typography fontStyle="italic" variant="caption" textAlign="center">
+            Loading...
+          </Typography>
+        )}
+        {!isLoadingReturnItems && returnItems.length === 0 && (
+          <Typography fontStyle="italic" variant="caption" textAlign="center">
+            No return item records found for this invoice
+          </Typography>
+        )}
+        {!isLoadingReturnItems && returnItems.length > 0 && (
+          <>
+            {returnItems.map((item, index) => (
+              <Grid key={index} size={12}>
+                <InvoiceReturnCard data={item} />
+              </Grid>
+            ))}
+          </>
+        )}
       </Grid>
       {isOpenCreatePayment && (
         <InvoicePaymentDialog
@@ -244,6 +285,15 @@ export const InvoiceView = ({
           isLoading={isLoadingCreate}
           handleClose={handleToggleCreatePayment}
           handleConfirm={handleCreatePayment}
+        />
+      )}
+      {isOpenReturnItems && (
+        <InvoiceReturnDialog
+          open={isOpenReturnItems}
+          initialValues={initialReturnValues}
+          handleOpenClose={handleToggleReturnItems}
+          isLoading={isLoadingCreateReturnItems}
+          handleConfirm={handleReturnItems}
         />
       )}
     </Container>

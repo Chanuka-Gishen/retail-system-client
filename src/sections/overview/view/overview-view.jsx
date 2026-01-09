@@ -15,8 +15,8 @@ import {
 import Grid from '@mui/material/Grid2';
 
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
-import PendingIcon from '@mui/icons-material/Pending';
-import TaxiAlertIcon from '@mui/icons-material/TaxiAlert';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import StackedLineChartIcon from '@mui/icons-material/StackedLineChart';
 
 import useAuthStore from 'src/store/auth-store';
 import StatCard from 'src/components/stat-card';
@@ -37,23 +37,27 @@ export const Overview = ({
   invStockStatsCount,
   chartTotalRevenueData,
   charTotalJobsData,
-  activeJobsCount,
-  todayRevenue,
-  totalReceivables,
   pendingPayments,
+  statTodaySales,
+  statTodayGrossProfit,
+  statTodayInvoicesCount,
+  statPastSales,
+  statPastInvoicesCount,
+  isLoadingStatTodaySales,
+  isLoadingStatTodayGrossProfit,
+  isLoadingStatTodayInvCount,
   isLoadingChartRevenueData,
   isLoadingChartTotalJobs,
   isLoadingStockAvailabilityStats,
-  isLoadingActiveJobsCount,
-  isLoadingTodayRevenue,
-  isLoadingReceivables,
   isLoadingPendingPayments,
+  isLoadingPastSales,
+  isLoadingPastInvCount,
 }) => {
   const theme = useTheme();
   const { auth } = useAuthStore.getState();
 
-  // Revenue Chart Options
-  const revenueOptions = {
+  // Sales Chart Options
+  const salesOptions = {
     chart: {
       type: 'line',
       height: 350,
@@ -66,7 +70,7 @@ export const Overview = ({
       width: 3,
     },
     title: {
-      text: 'Daily Revenue (Last 7 Days)',
+      text: 'Daily Sales (Last 7 Days)',
       align: 'left',
       style: {
         fontSize: '16px',
@@ -75,14 +79,14 @@ export const Overview = ({
     },
     xaxis: {
       type: 'datetime',
-      categories: chartTotalRevenueData.map((item) => item.date),
+      categories: statPastSales.map((item) => item.date),
       labels: {
         format: 'dd MMM',
       },
     },
     yaxis: {
       title: {
-        text: 'Revenue (LKR)',
+        text: 'Sales (LKR)',
       },
       labels: {
         formatter: (value) => formatCurrency(value),
@@ -110,7 +114,7 @@ export const Overview = ({
       width: 3,
     },
     title: {
-      text: 'Daily Work Orders (Last 7 Days)',
+      text: 'Daily Invoices (Last 7 Days)',
       align: 'left',
       style: {
         fontSize: '16px',
@@ -119,14 +123,14 @@ export const Overview = ({
     },
     xaxis: {
       type: 'datetime',
-      categories: charTotalJobsData.map((item) => item.date),
+      categories: statPastInvoicesCount.map((item) => item.date),
       labels: {
         format: 'dd MMM',
       },
     },
     yaxis: {
       title: {
-        text: 'Number of Orders',
+        text: 'Number of Invoices',
       },
       min: 0,
       tickAmount: 5,
@@ -135,17 +139,17 @@ export const Overview = ({
   };
 
   // Chart Series Data
-  const revenueSeries = [
+  const salesSeries = [
     {
-      name: 'Revenue',
-      data: chartTotalRevenueData.map((item) => item.totalRevenue),
+      name: 'Sales',
+      data: statPastSales.map((item) => item.total),
     },
   ];
 
   const orderCountSeries = [
     {
-      name: 'Work Orders',
-      data: charTotalJobsData.map((item) => item.count),
+      name: 'Invoices Count',
+      data: statPastInvoicesCount.map((item) => item.count),
     },
   ];
 
@@ -156,27 +160,27 @@ export const Overview = ({
           <Grid container spacing={2}>
             <Grid size={{ xs: 12, sm: 12, md: 4, lg: 4 }}>
               <StatCard
-                title={'Today Revenue'}
-                isLoading={isLoadingTodayRevenue}
-                value={todayRevenue}
+                title={'Today Sales'}
+                isLoading={isLoadingStatTodaySales}
+                value={statTodaySales}
                 icon={<LocalAtmIcon color="success" fontSize="large" />}
               />
             </Grid>
             <Grid size={{ xs: 12, sm: 12, md: 4, lg: 4 }}>
               <StatCard
-                title={'Receivables'}
-                isLoading={isLoadingReceivables}
-                value={totalReceivables}
-                icon={<PendingIcon color="info" fontSize="large" />}
+                title={'Today Gross Profit'}
+                isLoading={isLoadingStatTodayGrossProfit}
+                value={statTodayGrossProfit}
+                icon={<AttachMoneyIcon color="info" fontSize="large" />}
               />
             </Grid>
             <Grid size={{ xs: 12, sm: 12, md: 4, lg: 4 }}>
               <StatCard
-                title={'Active Queue'}
-                isLoading={isLoadingActiveJobsCount}
+                title={'Invoices Count'}
+                isLoading={isLoadingStatTodayInvCount}
                 type="number"
-                value={activeJobsCount}
-                icon={<TaxiAlertIcon color="success" fontSize="large" />}
+                value={statTodayInvoicesCount}
+                icon={<StackedLineChartIcon color="success" fontSize="large" />}
               />
             </Grid>
             <Grid size={{ xs: 12, sm: 12, md: 6, lg: 6 }}>
@@ -191,15 +195,10 @@ export const Overview = ({
                 }}
               >
                 <Paper elevation={0} sx={{ p: '10px' }}>
-                  {isLoadingChartRevenueData ? (
+                  {isLoadingPastSales ? (
                     <CircularProgress />
                   ) : (
-                    <Chart
-                      options={revenueOptions}
-                      series={revenueSeries}
-                      type="line"
-                      height={350}
-                    />
+                    <Chart options={salesOptions} series={salesSeries} type="line" height={350} />
                   )}
                 </Paper>
               </Card>
@@ -216,7 +215,7 @@ export const Overview = ({
                 }}
               >
                 <Paper elevation={0} sx={{ p: '10px' }}>
-                  {isLoadingChartTotalJobs ? (
+                  {isLoadingPastInvCount ? (
                     <CircularProgress />
                   ) : (
                     <Chart
@@ -272,7 +271,7 @@ export const Overview = ({
         </Grid>
         <Grid size={{ xs: 12, sm: 12, md: 6, lg: 6 }}>
           <Stack spacing={2}>
-            <Typography variant='h6'>Pending Cheque Payments</Typography>
+            <Typography variant="h6">Pending Cheque Payments</Typography>
             <Card>
               <Paper elevation={0}>
                 <CustomTable

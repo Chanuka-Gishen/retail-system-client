@@ -1,1 +1,0 @@
-export { default as Jobs } from "./controller/jobs-controller"

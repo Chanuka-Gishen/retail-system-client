@@ -16,12 +16,9 @@ export const IndexPage = lazy(() => import('src/pages/app'));
 export const CustomersPage = lazy(() => import('src/pages/customers'));
 export const InventoryPage = lazy(() => import('src/pages/inventory'));
 export const InventoryItemPage = lazy(() => import('src/pages/inventory-item'));
-export const WorkordersPage = lazy(() => import('src/pages/workorders'));
 export const InvoicesPage = lazy(() => import('src/pages/invoices'));
 export const InvoicePage = lazy(() => import('src/pages/invoice'));
 export const CustomerDetailsPage = lazy(() => import('src/pages/customer-details'));
-export const JobsPage = lazy(() => import('src/pages/jobs'));
-export const WorkorderDetailsPage = lazy(() => import('src/pages/workorder-details'));
 export const SuppliersPage = lazy(() => import('src/pages/suppliers'));
 export const SupplierInfoPage = lazy(() => import('src/pages/supplier-details'));
 export const AccountsPage = lazy(() => import('src/pages/accounts'));
@@ -77,13 +74,10 @@ const Router = () => {
         { path: NAVIGATION_ROUTES.inventory.base, element: <InventoryPage /> },
         { path: NAVIGATION_ROUTES.inventory.details.base, element: <InventoryItemPage /> },
         { path: NAVIGATION_ROUTES.pos.base, element: <PosPage /> },
-        { path: NAVIGATION_ROUTES.workorders.base, element: <WorkordersPage /> },
         { path: NAVIGATION_ROUTES.invoices.base, element: <InvoicesPage /> },
         { path: NAVIGATION_ROUTES.invoices.details.base, element: <InvoicePage /> },
         { path: NAVIGATION_ROUTES.bookings.base, element: <BookingsPage /> },
         { path: NAVIGATION_ROUTES.customers.Details.base, element: <CustomerDetailsPage /> },
-        { path: NAVIGATION_ROUTES.jobs.base, element: <JobsPage /> },
-        { path: NAVIGATION_ROUTES.jobs.details.base, element: <WorkorderDetailsPage /> },
         { path: NAVIGATION_ROUTES.suppliers.base, element: <SuppliersPage /> },
         { path: NAVIGATION_ROUTES.suppliers.details.base, element: <SupplierInfoPage /> },
         { path: NAVIGATION_ROUTES.suppliers.details.info.base, element: <GrnInfoPage /> },

@@ -22,7 +22,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Formik } from 'formik';
 import { useState } from 'react';
 import { CurrencyInput } from 'src/components/currency-input/currency-input';
-import { INV_CUS_TYP_REGISTERED, INV_CUSTOMER_TYPES } from 'src/constants/invoiceConstants';
+import { INV_CUS_TYP_REGISTERED, INV_CUSTOMER_TYPES } from 'src/constants/invoice-constants';
 import { UpdateInvoiceSchema } from 'src/schema/update-invoice-schema';
 
 export const UpdateInvoiceDialog = ({

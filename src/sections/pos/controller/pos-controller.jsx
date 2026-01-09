@@ -2,7 +2,7 @@ import useInventory from 'src/hooks/useInventory';
 import { PosView } from '../view/pos-view';
 import { useEffect, useState } from 'react';
 import usePagination from 'src/hooks/usePagination';
-import { INV_CUS_TYP_GUEST } from 'src/constants/invoiceConstants';
+import { INV_CUS_TYP_GUEST } from 'src/constants/invoice-constants';
 import { useInvoice } from 'src/hooks/useInvoice';
 import { WO_STATUS_COMPLETED, WO_STATUS_OPEN } from 'src/constants/workorderStatus';
 import useCustomer from 'src/hooks/useCustomer';

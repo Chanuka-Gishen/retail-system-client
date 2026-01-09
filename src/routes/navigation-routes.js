@@ -25,9 +25,6 @@ export const NAVIGATION_ROUTES = {
       base: '/inventory/details',
     },
   },
-  workorders: {
-    base: '/workorders',
-  },
   invoices: {
     base: '/invoices',
     details: {
@@ -36,12 +33,6 @@ export const NAVIGATION_ROUTES = {
   },
   pos: {
     base: '/pos',
-  },
-  jobs: {
-    base: '/jobs',
-    details: {
-      base: '/jobs/details',
-    },
   },
   employees: {
     base: '/employees',

@@ -1,4 +1,4 @@
-import { INV_CUS_TYP_REGISTERED, INV_CUSTOMER_TYPES } from 'src/constants/invoiceConstants';
+import { INV_CUS_TYP_REGISTERED, INV_CUSTOMER_TYPES } from 'src/constants/invoice-constants';
 import * as Yup from 'yup';
 
 export const UpdateInvoiceSchema = Yup.object({

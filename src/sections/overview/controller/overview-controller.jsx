@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Overview } from '../view/overview-view';
 import useInventory from 'src/hooks/useInventory';
 import { ITEM_STS_OUTOFSTOCK } from 'src/constants/item-status';
-import useWorkOrder from 'src/hooks/useWorkorder';
 import usePayment from 'src/hooks/usePayment';
+import { useInvoice } from 'src/hooks/useInvoice';
 
 const stockTableColumns = ['Code', 'Item', 'Quantity'];
-const pendingPayColumns = ['vehicle No', 'Customer Name', 'Amount', 'Transaction Id', 'Created At']
+const pendingPayColumns = ['vehicle No', 'Customer Name', 'Amount', 'Transaction Id', 'Created At'];
 
 const OverviewController = () => {
   const {
@@ -16,25 +16,25 @@ const OverviewController = () => {
     fetchStockStatistics,
   } = useInventory();
 
-  const {
-    chartTotalRevenueData,
-    charTotalJobsData,
-    activeJobsCount,
-    todayRevenue,
-    totalReceivables,
-    isLoadingChartRevenueData,
-    isLoadingChartTotalJobs,
-    isLoadingActiveJobsCount,
-    isLoadingTodayRevenue,
-    isLoadingReceivables,
-    fetchTotalRevenueChartData,
-    fetchTotalJobsCountChartData,
-    fetchActiveJobsCount,
-    fetchTodayTotalRevenue,
-    fetchTotalReceivables,
-  } = useWorkOrder();
+  const { pendingPayments, isLoadingPendingPayments, fetchPendingPayments } = usePayment();
 
-  const {pendingPayments, isLoadingPendingPayments, fetchPendingPayments} = usePayment()
+  const {
+    statTodaySales,
+    statTodayGrossProfit,
+    statTodayInvoicesCount,
+    statPastSales,
+    statPastInvoicesCount,
+    isLoadingStatTodaySales,
+    isLoadingStatTodayGrossProfit,
+    isLoadingStatTodayInvCount,
+    isLoadingPastSales,
+    isLoadingPastInvCount,
+    fetchTodaySalesController,
+    fetchTodayGrossProfitController,
+    fetchTodayInvCountController,
+    fetchPastSalesController,
+    fetchPastInvoicesCountController,
+  } = useInvoice();
 
   const [selectedInvStatus, setSelectedInvStatus] = useState(ITEM_STS_OUTOFSTOCK);
 
@@ -45,13 +45,20 @@ const OverviewController = () => {
   }, [selectedInvStatus]);
 
   useEffect(() => {
-    fetchTotalRevenueChartData();
-    fetchTotalJobsCountChartData();
-    fetchActiveJobsCount();
-    fetchTodayTotalRevenue();
-    fetchTotalReceivables();
-    fetchPendingPayments()
+    fetchPendingPayments();
+    fetchTodaySalesController();
+    fetchTodayGrossProfitController();
+    fetchTodayInvCountController();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    fetchPastSalesController();
+  }, []);
+
+  useEffect(() => {
+    fetchPastInvoicesCountController();
   }, []);
 
   return (
@@ -62,19 +69,19 @@ const OverviewController = () => {
       pendingPayColumns={pendingPayColumns}
       invStockStats={invStockStats}
       invStockStatsCount={invStockStatsCount}
-      chartTotalRevenueData={chartTotalRevenueData}
-      charTotalJobsData={charTotalJobsData}
-      activeJobsCount={activeJobsCount}
-      todayRevenue={todayRevenue}
-      totalReceivables={totalReceivables}
       pendingPayments={pendingPayments}
-      isLoadingChartRevenueData={isLoadingChartRevenueData}
-      isLoadingChartTotalJobs={isLoadingChartTotalJobs}
+      statTodaySales={statTodaySales}
+      statTodayGrossProfit={statTodayGrossProfit}
+      statTodayInvoicesCount={statTodayInvoicesCount}
+      statPastSales={statPastSales}
+      statPastInvoicesCount={statPastInvoicesCount}
       isLoadingStockAvailabilityStats={isLoadingStockAvailabilityStats}
-      isLoadingActiveJobsCount={isLoadingActiveJobsCount}
-      isLoadingTodayRevenue={isLoadingTodayRevenue}
-      isLoadingReceivables={isLoadingReceivables}
       isLoadingPendingPayments={isLoadingPendingPayments}
+      isLoadingStatTodaySales={isLoadingStatTodaySales}
+      isLoadingStatTodayGrossProfit={isLoadingStatTodayGrossProfit}
+      isLoadingStatTodayInvCount={isLoadingStatTodayInvCount}
+      isLoadingPastSales={isLoadingPastSales}
+      isLoadingPastInvCount={isLoadingPastInvCount}
     />
   );
 };
