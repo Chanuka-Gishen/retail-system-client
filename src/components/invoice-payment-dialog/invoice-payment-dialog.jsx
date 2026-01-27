@@ -7,6 +7,7 @@ import {
   Divider,
   FormControl,
   FormHelperText,
+  InputAdornment,
   InputLabel,
   MenuItem,
   Select,
@@ -21,12 +22,14 @@ import {
   PAY_METHOD_BACK_TRN,
   PAY_METHOD_CARD,
   PAY_METHOD_CASH,
+  PAY_METHOD_REFUND_TICKET,
+  PAY_METHOD_VOUCHER,
   PAY_METHODS,
 } from 'src/constants/payment-methods';
 import { addPaymentSchema } from 'src/schema/add-payment-schema';
 import { CurrencyInput } from 'src/components/currency-input/currency-input';
 import { formatCurrency } from 'src/utils/format-number';
-import { useEffect, useState } from 'react';
+import { Fragment } from 'react';
 
 export const InvoicePaymentDialog = ({ open, handleClose, data, isLoading, handleConfirm }) => {
   return (
@@ -35,11 +38,12 @@ export const InvoicePaymentDialog = ({ open, handleClose, data, isLoading, handl
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Add Invoice Payment</DialogTitle>
+      <DialogTitle id="alert-dialog-title">Add Payment</DialogTitle>
       <Formik
         initialValues={{
           paymentAmount: 0,
           paymentMethod: PAY_METHOD_CASH,
+          refundCode: '',
           paymentTransactionId: '',
           paymentNotes: '',
         }}
@@ -54,31 +58,21 @@ export const InvoicePaymentDialog = ({ open, handleClose, data, isLoading, handl
           touched,
           resetForm,
           handleSubmit,
-          setFieldValue,
           getFieldProps,
           handleChange,
           handleBlur,
         }) => {
-          const [amountReceived, setAmountReceived] = useState(0);
+          const balanceToReturn = data.invoiceBalanceAmount || 0 - values.paymentAmount;
+          console.log(`Balance: ${data.invoiceBalanceAmount} || pay: ${values.paymentAmount}`);
 
-          const handleReceivedAmountChange = (e) => {
-            setAmountReceived(e.target.value);
-          };
+          const isOverpayment = balanceToReturn > 0;
 
-          const amount = amountReceived || 0;
-          const paymentAmount = Math.min(amount, data.invoiceBalanceAmount);
-          const balanceToReturn = Math.max(0, amount - data.invoiceBalanceAmount);
-
-          useEffect(() => {
-            setFieldValue('paymentAmount', paymentAmount);
-          }, [amountReceived]);
           return (
             <form onSubmit={handleSubmit}>
               <DialogContent>
-                <Grid container spacing={2} sx={{ mt: 1 }}>
+                <Grid container spacing={2}>
                   <Grid size={{ xs: 12, sm: 12, lg: 12 }}>
                     <Stack direction="column" spacing={2}>
-                      <Divider> Payment Status </Divider>
                       <Stack direction="row" spacing={2}>
                         <Typography variant="subtitle1">Total Amount :</Typography>
                         <Typography>{formatCurrency(data.invoiceSubTotal)}</Typography>
@@ -89,46 +83,6 @@ export const InvoicePaymentDialog = ({ open, handleClose, data, isLoading, handl
                       </Stack>
                       <Divider> New Payment </Divider>
                     </Stack>
-                  </Grid>
-                  <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
-                    <TextField
-                      label="Amount Received"
-                      id="amount-received"
-                      name="amountReceived"
-                      fullWidth
-                      required
-                      autoComplete="off"
-                      variant="outlined"
-                      value={amountReceived}
-                      onChange={handleReceivedAmountChange}
-                      slotProps={{ input: { inputComponent: CurrencyInput } }}
-                    />
-                  </Grid>
-                  <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
-                    <TextField
-                      label="Balance Amount"
-                      name="balanceAmount"
-                      fullWidth
-                      disabled
-                      autoComplete="off"
-                      variant="outlined"
-                      value={balanceToReturn || ''}
-                      slotProps={{ input: { inputComponent: CurrencyInput } }}
-                    />
-                  </Grid>
-                  <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
-                    <TextField
-                      label="Payment Amount"
-                      name="paymentAmount"
-                      fullWidth
-                      required
-                      autoComplete="off"
-                      variant="outlined"
-                      {...getFieldProps('paymentAmount')}
-                      error={touched.paymentAmount && Boolean(errors.paymentAmount)}
-                      helperText={touched.paymentAmount && errors.paymentAmount}
-                      slotProps={{ input: { inputComponent: CurrencyInput } }}
-                    />
                   </Grid>
                   <Grid size={{ xs: 12, sm: 12, lg: 6 }}>
                     <FormControl fullWidth>
@@ -154,6 +108,84 @@ export const InvoicePaymentDialog = ({ open, handleClose, data, isLoading, handl
                       </FormHelperText>
                     </FormControl>
                   </Grid>
+
+                  {![PAY_METHOD_REFUND_TICKET, PAY_METHOD_VOUCHER].includes(
+                    values.paymentMethod
+                  ) && (
+                    <Fragment>
+                      <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
+                        <TextField
+                          label="Amount"
+                          name="paymentAmount"
+                          fullWidth
+                          required
+                          autoComplete="off"
+                          variant="outlined"
+                          {...getFieldProps('paymentAmount')}
+                          error={touched.paymentAmount && Boolean(errors.paymentAmount)}
+                          helperText={touched.paymentAmount && errors.paymentAmount}
+                          slotProps={{ input: { inputComponent: CurrencyInput } }}
+                        />
+                      </Grid>
+
+                      <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
+                        <TextField
+                          label={isOverpayment ? 'Return Amount' : 'Remaining Balance'}
+                          name="balanceAmount"
+                          fullWidth
+                          disabled
+                          autoComplete="off"
+                          variant="outlined"
+                          // Fix: Use formatted balance
+                          value={balanceToReturn}
+                          slotProps={{ input: { inputComponent: CurrencyInput } }}
+                        />
+                      </Grid>
+                    </Fragment>
+                  )}
+
+                  {values.paymentMethod === PAY_METHOD_VOUCHER && (
+                    <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
+                      <TextField
+                        label="Voucher Code"
+                        name="voucherCode"
+                        fullWidth
+                        required
+                        autoComplete="off"
+                        variant="outlined"
+                        value={values.voucherCode}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        helperText={touched.voucherCode && errors.voucherCode}
+                        error={touched.voucherCode && Boolean(errors.voucherCode)}
+                      />
+                    </Grid>
+                  )}
+
+                  {/* Refund Ticket Field */}
+                  {values.paymentMethod === PAY_METHOD_REFUND_TICKET && (
+                    <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
+                      <TextField
+                        label="Refund Ticket Code"
+                        name="refundCode"
+                        fullWidth
+                        required
+                        autoComplete="off"
+                        variant="outlined"
+                        value={values.refundCode}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        helperText={touched.refundCode && errors.refundCode}
+                        error={touched.refundCode && Boolean(errors.refundCode)}
+                        slotProps={{
+                          input: {
+                            startAdornment: <InputAdornment position="start">RTN</InputAdornment>,
+                          },
+                        }}
+                      />
+                    </Grid>
+                  )}
+
                   {[PAY_METHOD_BACK_TRN, PAY_METHOD_CARD].includes(values.paymentMethod) && (
                     <Grid size={{ xs: 12, sm: 6, lg: 6 }}>
                       <TextField
