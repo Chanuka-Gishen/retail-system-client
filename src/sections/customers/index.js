@@ -1,1 +1,0 @@
-export { default as Customers } from "./controller/customers-controller.jsx"

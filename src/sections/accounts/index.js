@@ -1,1 +1,0 @@
-export { default as Accounts } from "./controller/accounts-controller"

@@ -1,1 +1,0 @@
-export { default as ColorSwitch } from "./color-switch.jsx"

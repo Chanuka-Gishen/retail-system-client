@@ -1,0 +1,626 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 248, 250, 252;
+  --background-rgb: 2, 6, 23;
+  color-scheme: dark;
+}
+
+html.light {
+  --foreground-rgb: 15, 23, 42;
+  --background-rgb: 248, 250, 252;
+  color-scheme: light;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* =========================================================================
+   LIGHT THEME ADAPTATION
+   Applies when <html class="light" data-theme="light">
+   Rule: Crisp light surfaces, high-contrast dark text, clear hierarchy.
+   ========================================================================= */
+
+html.light body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* --- 1. Layout & Container Surfaces --- */
+html.light body,
+html.light main,
+html.light .bg-slate-950,
+html.light [class*="bg-slate-950"]:not([class*="fixed"]):not([class*="inset-0"]) {
+  background-color: #f8fafc !important;
+}
+
+/* Cards, Tables, Drawers, Sidebar & Modals */
+html.light .bg-slate-900,
+html.light [class*="bg-slate-900"]:not([class*="fixed"]):not([class*="inset-0"]):not([class*="bg-emerald-"]):not([class*="bg-teal-"]):not([class*="bg-rose-"]):not([class*="bg-amber-"]) {
+  background-color: #ffffff !important;
+}
+
+/* Sub-containers & Elevated Areas */
+html.light .bg-slate-850,
+html.light [class*="bg-slate-850"] {
+  background-color: #f8fafc !important;
+}
+html.light .bg-slate-800,
+html.light [class*="bg-slate-800"]:not([class*="bg-emerald-"]):not([class*="bg-teal-"]):not([class*="bg-rose-"]):not([class*="bg-amber-"]):not([class*="bg-blue-"]) {
+  background-color: #f1f5f9 !important;
+}
+
+/* Border System */
+html.light .border-slate-800,
+html.light [class*="border-slate-800"] {
+  border-color: #e2e8f0 !important;
+}
+html.light .border-slate-700,
+html.light .border-slate-750,
+html.light [class*="border-slate-700"] {
+  border-color: #cbd5e1 !important;
+}
+html.light .divide-slate-800 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #e2e8f0 !important;
+}
+
+/* --- 2. Typography Hierarchy --- */
+html.light .text-slate-100 {
+  color: #0f172a !important;
+}
+html.light .text-slate-200 {
+  color: #1e293b !important;
+}
+html.light .text-slate-300 {
+  color: #334155 !important;
+}
+html.light .text-slate-400 {
+  color: #64748b !important;
+}
+html.light .text-slate-500 {
+  color: #64748b !important;
+}
+
+/* Headings & General White Text (when on light containers) */
+html.light h1.text-white,
+html.light h2.text-white,
+html.light h3.text-white,
+html.light h4.text-white,
+html.light th.text-white,
+html.light td.text-white,
+html.light div.text-white:not([class*="bg-emerald-"]):not([class*="bg-teal-"]):not([class*="bg-rose-"]):not([class*="bg-amber-500"]):not([class*="bg-blue-600"]),
+html.light p.text-white:not([class*="bg-emerald-"]):not([class*="bg-teal-"]):not([class*="bg-rose-"]):not([class*="bg-blue-600"]),
+html.light span.text-white:not([class*="bg-emerald-"]):not([class*="bg-teal-"]):not([class*="bg-rose-"]):not([class*="bg-amber-500"]):not([class*="bg-blue-600"]) {
+  color: #0f172a !important;
+}
+
+/* --- 3. DARKER BUTTONS -> LIGHTER (WHITE) TEXT --- */
+/* Solid primary buttons, checkout tenders, and solid accent actions */
+html.light button.bg-emerald-600,
+html.light button.bg-emerald-500,
+html.light button.bg-emerald-700,
+html.light a.bg-emerald-600,
+html.light a.bg-emerald-500,
+html.light button.bg-teal-600,
+html.light button.bg-teal-500,
+html.light a.bg-teal-600,
+html.light button.bg-rose-600,
+html.light button.bg-rose-500,
+html.light a.bg-rose-600,
+html.light button.bg-blue-600,
+html.light a.bg-blue-600,
+html.light [class*="bg-emerald-600"],
+html.light [class*="bg-emerald-500"],
+html.light [class*="bg-teal-600"],
+html.light [class*="bg-rose-600"],
+html.light [class*="bg-blue-600"] {
+  color: #ffffff !important;
+}
+
+/* All children inside darker buttons (text, icons, spans) must be pure white */
+html.light button.bg-emerald-600 *,
+html.light button.bg-emerald-500 *,
+html.light button.bg-emerald-700 *,
+html.light a.bg-emerald-600 *,
+html.light a.bg-emerald-500 *,
+html.light button.bg-teal-600 *,
+html.light button.bg-teal-500 *,
+html.light a.bg-teal-600 *,
+html.light button.bg-rose-600 *,
+html.light button.bg-rose-500 *,
+html.light a.bg-rose-600 *,
+html.light button.bg-blue-600 *,
+html.light a.bg-blue-600 *,
+html.light [class*="bg-emerald-600"] *,
+html.light [class*="bg-emerald-500"] *,
+html.light [class*="bg-teal-600"] *,
+html.light [class*="bg-rose-600"] *,
+html.light [class*="bg-blue-600"] * {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+/* --- 4. LIGHTER BUTTONS -> DARKER TEXT --- */
+/* Secondary / Neutral buttons: solid white surface with slate-300 border */
+html.light button.bg-slate-900,
+html.light button.bg-slate-800,
+html.light button.bg-slate-850,
+html.light button.bg-slate-950,
+html.light a.bg-slate-900,
+html.light a.bg-slate-800,
+html.light a.bg-slate-850,
+html.light a.bg-slate-950,
+html.light button[class*="border-slate-"],
+html.light a[class*="border-slate-"],
+html.light button.border-slate-750 {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #1e293b !important;
+}
+
+html.light button.bg-slate-900 *,
+html.light button.bg-slate-800 *,
+html.light button.bg-slate-850 *,
+html.light button.bg-slate-950 *,
+html.light a.bg-slate-900 *,
+html.light a.bg-slate-800 *,
+html.light a.bg-slate-850 *,
+html.light a.bg-slate-950 *,
+html.light button[class*="border-slate-"] *,
+html.light a[class*="border-slate-"] *,
+html.light button.border-slate-750 * {
+  color: #1e293b !important;
+  stroke: #334155 !important;
+}
+
+/* Lighter Buttons Hover: Slate-100 background, text remains dark */
+html.light button.bg-slate-900:hover,
+html.light button.bg-slate-800:hover,
+html.light button.bg-slate-850:hover,
+html.light button.bg-slate-950:hover,
+html.light button[class*="border-slate-"]:hover,
+html.light a.bg-slate-900:hover,
+html.light a.bg-slate-800:hover,
+html.light a.bg-slate-850:hover,
+html.light a.bg-slate-950:hover,
+html.light a[class*="border-slate-"]:hover,
+html.light button.border-slate-750:hover {
+  background-color: #f1f5f9 !important;
+  border-color: #94a3b8 !important;
+  color: #0f172a !important;
+}
+
+html.light button.bg-slate-900:hover *,
+html.light button.bg-slate-800:hover *,
+html.light button.bg-slate-850:hover *,
+html.light button.bg-slate-950:hover *,
+html.light button[class*="border-slate-"]:hover *,
+html.light a.bg-slate-900:hover *,
+html.light a.bg-slate-800:hover *,
+html.light a.bg-slate-850:hover *,
+html.light a.bg-slate-950:hover *,
+html.light a[class*="border-slate-"]:hover *,
+html.light button.border-slate-750:hover * {
+  color: #0f172a !important;
+  stroke: #0f172a !important;
+}
+
+/* Hover:text-white overrides for lighter buttons */
+html.light .hover\:text-white:hover {
+  color: #0f172a !important;
+}
+html.light .hover\:bg-slate-800:hover,
+html.light .hover\:bg-slate-850:hover {
+  background-color: #f1f5f9 !important;
+}
+html.light .hover\:bg-slate-700:hover {
+  background-color: #e2e8f0 !important;
+}
+
+/* Ghost / Icon Buttons */
+html.light button:not([class*="bg-emerald-6"]):not([class*="bg-teal-6"]):not([class*="bg-rose-6"]):not([class*="bg-blue-6"]) svg {
+  color: #475569 !important;
+  stroke: #475569 !important;
+}
+html.light button:not([class*="bg-emerald-6"]):not([class*="bg-teal-6"]):not([class*="bg-rose-6"]):not([class*="bg-blue-6"]):hover svg {
+  color: #0f172a !important;
+  stroke: #0f172a !important;
+}
+
+/* Inactive Pagination Buttons */
+html.light button[title="First page"],
+html.light button[title="Previous page"],
+html.light button[title="Next page"],
+html.light button[title="Last page"] {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #1e293b !important;
+}
+html.light button[title="First page"] svg,
+html.light button[title="Previous page"] svg,
+html.light button[title="Next page"] svg,
+html.light button[title="Last page"] svg {
+  stroke: #334155 !important;
+}
+
+/* --- 5. Action Tint Containers & Badges --- */
+/* Emerald Tint Containers */
+html.light .bg-emerald-950,
+html.light [class*="bg-emerald-950"] {
+  background-color: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+  color: #065f46 !important;
+}
+html.light .bg-emerald-950:hover,
+html.light .bg-emerald-900:hover {
+  background-color: #d1fae5 !important;
+  border-color: #6ee7b7 !important;
+}
+html.light .bg-emerald-950 *,
+html.light [class*="bg-emerald-950"] * {
+  color: #065f46 !important;
+  stroke: #065f46 !important;
+}
+
+/* Teal Tint Containers */
+html.light .bg-teal-950,
+html.light [class*="bg-teal-950"] {
+  background-color: #f0fdfa !important;
+  border-color: #99f6e4 !important;
+  color: #115e59 !important;
+}
+html.light .bg-teal-950:hover,
+html.light .bg-teal-900:hover {
+  background-color: #ccfbf1 !important;
+  border-color: #5eead4 !important;
+}
+html.light .bg-teal-950 *,
+html.light [class*="bg-teal-950"] * {
+  color: #115e59 !important;
+  stroke: #115e59 !important;
+}
+
+/* Amber Tint Containers */
+html.light .bg-amber-950,
+html.light [class*="bg-amber-950"] {
+  background-color: #fffbeb !important;
+  border-color: #fde68a !important;
+  color: #92400e !important;
+}
+html.light .bg-amber-950:hover,
+html.light .bg-amber-900:hover {
+  background-color: #fef3c7 !important;
+  border-color: #fcd34d !important;
+}
+html.light .bg-amber-950 *,
+html.light [class*="bg-amber-950"] * {
+  color: #92400e !important;
+  stroke: #92400e !important;
+}
+
+/* Rose Tint Containers */
+html.light .bg-rose-950,
+html.light [class*="bg-rose-950"] {
+  background-color: #fff1f2 !important;
+  border-color: #fecdd3 !important;
+  color: #9f1239 !important;
+}
+html.light .bg-rose-950:hover,
+html.light .bg-rose-900:hover {
+  background-color: #ffe4e6 !important;
+  border-color: #fda4af !important;
+}
+html.light .bg-rose-950 *,
+html.light [class*="bg-rose-950"] * {
+  color: #9f1239 !important;
+  stroke: #9f1239 !important;
+}
+
+/* Blue & Sky Tint Containers */
+html.light .bg-blue-950,
+html.light [class*="bg-blue-950"],
+html.light .bg-sky-950,
+html.light [class*="bg-sky-950"] {
+  background-color: #f0f9ff !important;
+  border-color: #bae6fd !important;
+  color: #0369a1 !important;
+}
+html.light .bg-blue-950 *,
+html.light [class*="bg-blue-950"] *,
+html.light .bg-sky-950 *,
+html.light [class*="bg-sky-950"] * {
+  color: #0369a1 !important;
+  stroke: #0369a1 !important;
+}
+
+/* Cyan Tint Containers */
+html.light .bg-cyan-950,
+html.light [class*="bg-cyan-950"] {
+  background-color: #ecfeff !important;
+  border-color: #a5f3fc !important;
+  color: #0e7490 !important;
+}
+html.light .bg-cyan-950 *,
+html.light [class*="bg-cyan-950"] * {
+  color: #0e7490 !important;
+  stroke: #0e7490 !important;
+}
+
+/* --- 6. Navigation Tabs --- */
+/* Active Tab: Crisp Emerald Line & Dark Emerald Text */
+html.light button[class*="border-emerald-500"] {
+  border-color: #059669 !important;
+  color: #065f46 !important;
+}
+html.light button[class*="border-emerald-500"] * {
+  color: #065f46 !important;
+}
+/* Inactive Tabs: Muted Slate Text */
+html.light button[class*="border-transparent"] {
+  color: #64748b !important;
+}
+html.light button[class*="border-transparent"]:hover {
+  color: #0f172a !important;
+}
+
+/* --- 7. Sidebar Navigation --- */
+/* Active route link */
+html.light a[class*="bg-emerald-600"] {
+  background-color: #ecfdf5 !important;
+  border-color: #059669 !important;
+  color: #065f46 !important;
+}
+html.light a[class*="bg-emerald-600"] * {
+  color: #065f46 !important;
+  stroke: #059669 !important;
+}
+
+/* Inactive nav links */
+html.light a.text-slate-400:hover,
+html.light a.text-slate-300:hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+/* --- 8. Table Headers & Rows --- */
+html.light thead {
+  background-color: #f8fafc !important;
+  color: #475569 !important;
+  border-color: #e2e8f0 !important;
+}
+html.light thead th {
+  color: #475569 !important;
+}
+html.light tbody tr:hover {
+  background-color: #f8fafc !important;
+}
+
+/* --- 9. Form Inputs, Selects & Textareas --- */
+html.light input,
+html.light select,
+html.light textarea {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #94a3b8 !important;
+}
+html.light select option {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+/* --- 10. Status Badges & Pills --- */
+html.light .text-amber-400,
+html.light .text-amber-300 {
+  color: #b45309 !important;
+}
+html.light .text-emerald-400,
+html.light .text-emerald-300 {
+  color: #047857 !important;
+}
+html.light .text-teal-400,
+html.light .text-teal-300 {
+  color: #0f766e !important;
+}
+html.light .text-rose-400,
+html.light .text-rose-300 {
+  color: #b91c1c !important;
+}
+html.light .text-blue-400,
+html.light .text-blue-300 {
+  color: #0284c7 !important;
+}
+
+/* Solid amber badge */
+html.light .bg-amber-500 {
+  background-color: #f59e0b !important;
+  color: #0f172a !important;
+}
+html.light .bg-amber-500 * {
+  color: #0f172a !important;
+}
+
+/* Modal Backdrops - Translucent dark overlay with blur */
+html.light .fixed.inset-0.bg-slate-950,
+html.light .fixed.inset-0[class*="bg-slate-950"],
+html.light .fixed.inset-0[class*="bg-black"] {
+  background-color: rgba(15, 23, 42, 0.7) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* =========================================================================
+   RESPONSIVE MOBILE VIEW SPACING (< 640px)
+   Balances container padding, inter-card gaps, and touch target breathing room
+   ========================================================================= */
+@media (max-width: 640px) {
+  /* Give containers comfortable margins and avoid cramped edges */
+  .p-6 {
+    padding: 1rem !important;
+  }
+  .p-5 {
+    padding: 0.875rem !important;
+  }
+  .px-6 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  .py-6 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+  /* Consistent card rhythm on mobile */
+  .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1rem !important;
+  }
+  .space-y-5 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.875rem !important;
+  }
+  .gap-6 {
+    gap: 1rem !important;
+  }
+  .gap-5 {
+    gap: 0.875rem !important;
+  }
+  .gap-4 {
+    gap: 0.75rem !important;
+  }
+  /* Mobile table responsiveness: prevent horizontal blowout */
+  .overflow-x-auto {
+    margin-left: -0.25rem;
+    margin-right: -0.25rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* =========================================================================
+   UNIVERSAL THERMAL RECEIPT & INVOICE PRINT ISOLATION (@media print)
+   Ensures that ONLY the clean receipt paper prints, NOT the modal background,
+   dialog backdrops, headers, sidebars, buttons, or page UI!
+   ========================================================================= */
+@media print {
+  @page {
+    size: auto;
+    margin: 0;
+  }
+
+  html,
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* 1. Hide everything on the screen by default */
+  body * {
+    visibility: hidden;
+  }
+
+  /* 2. Remove all modal backdrops, overlays, blur, fixed positioning */
+  .fixed,
+  .fixed.inset-0,
+  [class*="backdrop-blur"],
+  [class*="bg-black/"],
+  [class*="bg-slate-950/"] {
+    position: static !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+  }
+
+  /* 3. Hide all UI controls, toolbars, buttons, navigation */
+  nav,
+  aside,
+  header,
+  footer,
+  button,
+  input,
+  select,
+  .print\:hidden,
+  .no-print {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* 4. Display ONLY the designated printable receipt element */
+  .printable-receipt-area,
+  .printable-receipt-area *,
+  #printable-receipt,
+  #printable-receipt * {
+    visibility: visible !important;
+  }
+
+  .printable-receipt-area,
+  #printable-receipt {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 80mm !important;
+    max-width: 80mm !important;
+    margin: 0 !important;
+    padding: 2mm 3mm !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    font-family: 'Courier New', Courier, monospace !important;
+  }
+
+  /* When printing an A4 tax invoice */
+  .printable-a4-area,
+  .printable-a4-area * {
+    visibility: visible !important;
+  }
+
+  .printable-a4-area {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 210mm !important;
+    margin: 0 !important;
+    padding: 10mm !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* High-contrast pure black text & borders for thermal/laser printheads */
+  .printable-receipt-area *,
+  #printable-receipt *,
+  .printable-a4-area * {
+    color: #000000 !important;
+    border-color: #000000 !important;
+    background-color: transparent !important;
+  }
+}

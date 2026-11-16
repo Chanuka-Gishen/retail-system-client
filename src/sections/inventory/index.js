@@ -1,1 +1,0 @@
-export { default as Inventory } from "./controller/inventory-controller.jsx"
